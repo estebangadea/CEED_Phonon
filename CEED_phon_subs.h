@@ -96,6 +96,12 @@ void init_bath(UNINT n_bath, double temp, double bmass, double ki, double span,
       vector<double>& vi_vec,
       vector<double>& ki_vec);
 
+void init_bath_javi(UNINT n_bath, double temp, double bmass, double ki, double span,
+      int seed,
+      vector<double>& xi_vec,
+      vector<double>& vi_vec,
+      vector<double>& ki_vec);
+
 void init_output(ofstream* outfile);
 
 void write_output(double mass_bath, double dt, int tt, int print_t, UNINT n_el,
