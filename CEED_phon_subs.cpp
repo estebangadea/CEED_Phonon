@@ -519,6 +519,8 @@ void readinput(UNINT& n_el, UNINT& n_phon, UNINT& np_levels, UNINT& n_tot,
   inputf.close();
   return;
 }
+//##############################################################################
+
 void readefield(int& efield_flag, vector<double>& efield_vec){
    ifstream inputf;
    double val;
@@ -631,6 +633,28 @@ void efield_t(int efield_flag, int tt, double dt, double Efield,
          Efield_t[0] = 0.0e0;
          Efield_t[1] = 0.0e0;
       }
+   }
+   return;
+}
+//##############################################################################
+
+void init_bath_javi(UNINT n_bath, double temp, double bmass, double bfreq,
+   double span, int seed,
+   vector<double>& xi_vec,
+   vector<double>& vi_vec,
+   vector<double>& ki_vec){
+   srand(seed);
+
+   double vmax, potE;
+   double kt = temp * 8.6173324e-5/27.2113862;
+   double ki = bfreq * bfreq;
+
+   for(int ii=0; ii<n_bath; ii++){
+      ki_vec[ii] = (0.5 + drand()) * ki;
+      vmax = sqrt(2 * kt / bmass);
+      vi_vec[ii] = drand() * vmax;
+      potE = kt - 0.5 * bmass * pow(vi_vec[ii], 2);
+      xi_vec[ii] = sqrt(2 * ki * bmass * potE);
    }
    return;
 }

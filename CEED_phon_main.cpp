@@ -71,7 +71,7 @@ int main(){
 
    build_rho_matrix(rho_tot, eigen_coef, eigen_coefT, n_tot);
 
-   init_bath(n_bath, b_temp, mass_bath, w_phon_vec[0], 1, seed,
+   init_bath_javi(n_bath, b_temp, mass_bath, w_phon_vec[0], 1, seed,
              xi_vec, vi_vec, ki_vec);
 
    init_cuda(& *H_tot.begin(), & *mu_tot.begin(), & *v_bath_mat.begin(),
