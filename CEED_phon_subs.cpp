@@ -323,7 +323,7 @@ void init_bath(UNINT n_bath, double temp,double bmass, double bfreq,
    vector<double>& ki_vec){
 
    srand(seed);
-   double stdev = sqrt(temp/bmass);
+   double stdev = sqrt(temp/bmass * 8.6173324e-5/27.2113862);
    // double ki = bfreq * bfreq * bmass;
    double ki = bfreq * bfreq; //This allows us to work with only xi.
 
@@ -342,7 +342,7 @@ void init_bath(UNINT n_bath, double temp, double bmass, double bfreq,
    vector<double>& ki_vec){
    srand(seed);
 
-   double stdev = sqrt(temp/bmass);
+   double stdev = sqrt(temp/bmass * 8.6173324e-5/27.2113862);
    double ki = bfreq * bfreq;
 
    for(int ii=0; ii<n_bath; ii++){
@@ -654,7 +654,7 @@ void init_bath_javi(UNINT n_bath, double temp, double bmass, double bfreq,
       vmax = sqrt(2 * kt / bmass);
       vi_vec[ii] = drand() * vmax;
       potE = kt - 0.5 * bmass * pow(vi_vec[ii], 2);
-      xi_vec[ii] = sqrt(2 * ki * bmass * potE);
+      xi_vec[ii] = sqrt(2/ki_vec[ii] * bmass * potE);
    }
    return;
 }
