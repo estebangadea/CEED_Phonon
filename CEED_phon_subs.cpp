@@ -369,14 +369,14 @@ void write_output(double mass_bath, double dt, int tt, int print_t, UNINT n_el,
                   UNINT n_phon, UNINT np_levels, UNINT n_tot, UNINT n_bath,
                   ofstream* outfile){
 
-   double Ener, mu, trace_rho, Ek_bath;
+   double Ener, mu, trace_rho, Ek_bath, xi_tot;
    vector<double> tr_rho_el(n_el, 0.0e0);
    vector<double> tr_rho_ph(n_phon*np_levels, 0.0e0);
    vector< complex<double> > tr_rho(n_tot,0.0e0);
 
    if(tt%print_t==0){
       getting_printing_info( & Ener, & mu, & *tr_rho.begin(), & Ek_bath, n_tot,
-                            n_bath);
+                            n_bath, xi_tot);
       outfile[0]<<Ener<<endl;
       outfile[1]<<mu<<endl;
       outfile[2]<< tt*dt <<endl;
@@ -399,7 +399,7 @@ void write_output(double mass_bath, double dt, int tt, int print_t, UNINT n_el,
       for(int jj=0; jj<n_phon*np_levels; jj++){
          outfile[5]<<"   "<<jj<<"   "<<tr_rho_ph[jj]<<endl;
       }
-      outfile[6]<<mass_bath*Ek_bath/n_bath<<endl;
+      outfile[6]<<mass_bath*Ek_bath/n_bath<<"   "<<xi_tot<<endl;
    }
    return;
 }
@@ -652,9 +652,10 @@ void init_bath_javi(UNINT n_bath, double temp, double bmass, double bfreq,
    for(int ii=0; ii<n_bath; ii++){
       ki_vec[ii] = (0.5 + drand()) * ki;
       vmax = sqrt(2 * kt / bmass);
-      vi_vec[ii] = drand() * vmax;
+      vi_vec[ii] = (2.0 * drand() - 1.0) * vmax;
       potE = kt - 0.5 * bmass * pow(vi_vec[ii], 2);
       xi_vec[ii] = sqrt(2/ki_vec[ii] * bmass * potE);
+
    }
    return;
 }
